@@ -65,6 +65,11 @@ export function useCarbonCalculator() {
     // Return null if there are validation errors
     if (Object.keys(errors).length > 0) return null;
 
+    // Return null if all numerical inputs are empty (awaiting user input)
+    if (inputs.milesDriven === '' && inputs.publicTransit === '' && inputs.energyUsage === '') {
+      return null;
+    }
+
     // Sanitize to 0 if empty
     const milesDriven = Number(inputs.milesDriven) || 0;
     const publicTransit = Number(inputs.publicTransit) || 0;
