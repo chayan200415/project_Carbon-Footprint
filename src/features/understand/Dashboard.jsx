@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Card = ({ title, description, icon, color }) => (
   <article 
     tabIndex="0"

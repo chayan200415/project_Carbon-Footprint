@@ -1,4 +1,5 @@
 import { renderHook, act } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
 import { useCarbonCalculator } from '../../hooks/useCarbonCalculator';
 
 describe('useCarbonCalculator hook', () => {
@@ -42,7 +43,7 @@ describe('useCarbonCalculator hook', () => {
     act(() => {
       result.current.updateInput('milesDriven', '100'); // 100 * 0.89 = 89
       result.current.updateInput('publicTransit', '50'); // 50 * 0.39 = 19.5
-      result.current.updateInput('energyUsage', '300'); // (300 / 4.33) * 0.85 = ~58.89
+      result.current.updateInput('energyUsage', '48'); // ($48 bill / 0.16) = 300 kWh. (300 / 4.33) * 0.85 = ~58.89
       result.current.updateInput('meatConsumption', 'high'); // 7.2 * 7 = 50.4
     });
 
@@ -87,7 +88,7 @@ describe('useCarbonCalculator hook', () => {
 
     act(() => {
       result.current.updateInput('milesDriven', '10'); // low
-      result.current.updateInput('energyUsage', '100'); // low
+      result.current.updateInput('energyUsage', '16'); // ($16 bill / 0.16) = 100 kWh (low)
       result.current.updateInput('meatConsumption', 'low'); // low
     });
 

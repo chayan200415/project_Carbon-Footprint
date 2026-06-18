@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Calculator from '../../features/track/Calculator';
@@ -38,7 +37,7 @@ describe('Calculator Component', () => {
     expect(transitInput.value).toBe('20');
 
     // Check Energy input
-    const energyInput = screen.getByLabelText(/home energy usage/i);
+    const energyInput = screen.getByLabelText(/electricity bill/i);
     expect(energyInput).toBeInTheDocument();
     expect(energyInput.value).toBe('300');
 

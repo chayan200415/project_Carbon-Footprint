@@ -1,47 +1,44 @@
-import React from 'react';
+const InputField = ({ label, name, type, placeholder, unit, value, onChange, error }) => {
+  const inputId = `input-${name}`;
+  const errorId = `error-${name}`;
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label htmlFor={inputId} className="text-sm font-medium text-slate-300">
+        {label}
+      </label>
+      <div className="relative">
+        <input
+          id={inputId}
+          name={name}
+          type={type}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          aria-invalid={error ? "true" : "false"}
+          aria-describedby={error ? errorId : undefined}
+          className={`w-full bg-slate-900 border ${error ? 'border-red-500 focus:ring-red-500/20' : 'border-slate-700 focus:border-brand-500 focus:ring-brand-500/20'} rounded-lg px-4 py-3 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-4 transition-all pr-12`}
+        />
+        {unit && (
+          <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium pointer-events-none">
+            {unit}
+          </span>
+        )}
+      </div>
+      {error && (
+        <p id={errorId} className="text-sm text-red-400 mt-1 flex items-center gap-1 animate-fade-in" role="alert">
+          <span aria-hidden="true">⚠️</span> {error}
+        </p>
+      )}
+    </div>
+  );
+};
 
 export default function Calculator({ inputs, updateInput, errors }) {
   
   const handleChange = (e) => {
     const { name, value } = e.target;
     updateInput(name, value);
-  };
-
-  const InputField = ({ label, name, type, placeholder, unit }) => {
-    const error = errors[name];
-    const inputId = `input-${name}`;
-    const errorId = `error-${name}`;
-
-    return (
-      <div className="flex flex-col gap-1.5">
-        <label htmlFor={inputId} className="text-sm font-medium text-slate-300">
-          {label}
-        </label>
-        <div className="relative">
-          <input
-            id={inputId}
-            name={name}
-            type={type}
-            value={inputs[name]}
-            onChange={handleChange}
-            placeholder={placeholder}
-            aria-invalid={error ? "true" : "false"}
-            aria-describedby={error ? errorId : undefined}
-            className={`w-full bg-slate-900 border ${error ? 'border-red-500 focus:ring-red-500/20' : 'border-slate-700 focus:border-brand-500 focus:ring-brand-500/20'} rounded-lg px-4 py-3 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-4 transition-all pr-12`}
-          />
-          {unit && (
-            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium pointer-events-none">
-              {unit}
-            </span>
-          )}
-        </div>
-        {error && (
-          <p id={errorId} className="text-sm text-red-400 mt-1 flex items-center gap-1 animate-fade-in" role="alert">
-            <span aria-hidden="true">⚠️</span> {error}
-          </p>
-        )}
-      </div>
-    );
   };
 
   return (
@@ -66,6 +63,9 @@ export default function Calculator({ inputs, updateInput, errors }) {
           type="text" 
           placeholder="e.g. 150" 
           unit="miles"
+          value={inputs.milesDriven}
+          onChange={handleChange}
+          error={errors.milesDriven}
         />
 
         <InputField 
@@ -74,14 +74,20 @@ export default function Calculator({ inputs, updateInput, errors }) {
           type="text" 
           placeholder="e.g. 50" 
           unit="miles"
+          value={inputs.publicTransit}
+          onChange={handleChange}
+          error={errors.publicTransit}
         />
 
         <InputField 
-          label="Home Energy Usage (Monthly)" 
+          label="Electricity Bill (Monthly)" 
           name="energyUsage" 
           type="text" 
-          placeholder="e.g. 800" 
-          unit="kWh"
+          placeholder="e.g. 80" 
+          unit="$"
+          value={inputs.energyUsage}
+          onChange={handleChange}
+          error={errors.energyUsage}
         />
 
         <div className="flex flex-col gap-1.5">
